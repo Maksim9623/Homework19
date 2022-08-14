@@ -16,11 +16,12 @@ class UserView(Resource):
 
     def post(self):
         req_json = request.json
-        user = user_service.create_user(req_json)
-        return '', 201
+        user_service.create_user(req_json)
+        return "", 201
 
 
-
-
-
-
+@user_ns.route('/<int:bid>')
+class UserView(Resource):
+    def delete(self, bid):
+        user_service.delete(bid)
+        return "", 204

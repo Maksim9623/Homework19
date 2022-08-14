@@ -11,6 +11,7 @@ auth_ns = Namespace('auth')
 class AuthView(Resource):
     def post(self):
         req_json = request.json
+
         username = req_json.get('username', None)
         password = req_json.get('password', None)
 
@@ -19,12 +20,12 @@ class AuthView(Resource):
 
         token = auth_service.generate_token(username, password)
 
-        return token
+        return token, 201
 
     def put(self):
         req_json = request.json
         token = req_json.get('refresh_token')
-        tokens = auth_service.approve_refrash_token(token)
+        tokens = auth_service.approve_refresh_token(token)
         return '', 201
 
 
