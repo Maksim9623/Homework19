@@ -26,7 +26,7 @@ class AuthView(Resource):
         req_json = request.json
         token = req_json.get('refresh_token')
         tokens = auth_service.approve_refresh_token(token)
-        return '', 201
+        return tokens, 201
 
 
 @auth_ns.route('/<int:bid>')

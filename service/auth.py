@@ -19,7 +19,7 @@ class AuthService:
             raise abort(404)
 
         if not is_refresh:
-            if not self.user_service.compare_passwords(user.password, password):
+            if not self.user_service.compare_passwords(password, user.password):
                 raise Exception("Пароли не совпадают")
 
         data = {
@@ -41,6 +41,7 @@ class AuthService:
         }, 201
 
     def approve_refresh_token(self, refresh_token):
+
         data = jwt.decode(jwt=refresh_token, key=SECRET_KEY, algorithms=[ALGORITM])
         username = data['username']
 

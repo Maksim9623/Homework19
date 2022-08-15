@@ -2,7 +2,7 @@ from flask import request
 from flask_restx import Resource, Namespace
 
 from dao.model.genre import GenreSchema
-from helpers import auth_required
+from helpers import auth_required, admin_required
 from implemented import genre_service
 
 genre_ns = Namespace('genres')
@@ -16,6 +16,7 @@ class GenresView(Resource):
         res = GenreSchema(many=True).dump(rs)
         return res, 200
 
+    @admin_required
     def post(self):
         req_json = request.json
         genre = genre_service.create(req_json)
@@ -30,6 +31,7 @@ class GenreView(Resource):
         sm_d = GenreSchema().dump(r)
         return sm_d, 200
 
+    @admin_required
     def put(self, rid):
         req_json = request.json
         if "id" not in req_json:
